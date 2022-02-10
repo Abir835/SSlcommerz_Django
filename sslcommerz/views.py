@@ -1,5 +1,5 @@
 from django.shortcuts import render, reverse, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from sslcommerz.forms import sslForm
 from payment_method import settings
 from sslcommerz_python.payment import SSLCSession
@@ -49,11 +49,30 @@ def index(request):
 
 @csrf_exempt
 def ssl_status(request):
-    if request.method == 'post':
+    if request.method == 'post' or request.method == 'POST':
         payment_data = request.POST
+        print('============')
         print(payment_data)
+        print('============')
+
+        status = payment_data['status']
+        if status == 'VALID':
+            val_id = payment_data['val_id']
+            tran_id = payment_data['tran_id']
+
+            return HttpResponseRedirect(reverse('ssl_complete', kwargs={'val_id': val_id, 'tran_id': tran_id}))
+
     return render(request, 'status.html')
 
 
-def ssl_complate(request, val_id, tran_id):
-    pass
+def ssl_complete(request, val_id, tran_id):
+    # save data with order id and val id
+    # order = order query
+    # order = false or true
+    # order.ordered id = val_id
+    # order.payment_id = tran_id
+    # cart_item = Cart.objects.filter(user=request.user, purchased=False)
+    # item in cart_item:
+    # item = purchased = True
+    # item.save()
+    return HttpResponse(val_id)
