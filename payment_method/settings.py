@@ -129,5 +129,5 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-Store_ID = 'test6203566f7cc7a'
-Store_Password = 'test6203566f7cc7a@ssl'
+Store_ID = ''
+Store_Password = ''
